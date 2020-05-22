@@ -11,7 +11,7 @@ function windowResized() {
 function setup() {
     canvasWidth = 400;
     canvasHeight = 1000;
-    createCanvas(canvasWidth, canvasHeight);
+    cnv = createCanvas(canvasWidth, canvasHeight);
     centerCanvas();
     xvelocity = 2;
     going = true;
@@ -91,8 +91,4 @@ function draw() {
     } else if (lineX >= placaX + placaL) {
         lineX = placaX + placaL
     }
-}
-
-function mousePressed() {
-    going = !going;
 }
