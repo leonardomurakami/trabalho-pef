@@ -8,6 +8,7 @@ function windowResized() {
     centerCanvas();
 }
 
+
 function setup() {
     canvasWidth = 400;
     canvasHeight = 1000;
