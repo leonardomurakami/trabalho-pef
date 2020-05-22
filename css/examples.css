@@ -1,0 +1,9 @@
+html, body {
+    height: 100%;
+}
+
+.header {
+    margin-right: auto;
+    margin-bottom: 5%;
+    padding: 5px;
+}
