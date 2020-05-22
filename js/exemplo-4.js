@@ -1,6 +1,6 @@
 function centerCanvas() {
     var x = (windowWidth - width) / 2;
-    var y = (windowHeight - height) / 2 + (windowHeight * 0.05);
+    var y = (windowHeight - height) / 2 + (windowHeight * 0.05) + (canvasHeight * 0.2);
     cnv.position(x, y);
 }
 
@@ -9,7 +9,9 @@ function windowResized() {
 }
 
 function setup() {
-    createCanvas(400, 1000);
+    canvasWidth = 400;
+    canvasHeight = 1000;
+    createCanvas(canvasWidth, canvasHeight);
     centerCanvas();
     xvelocity = 2;
     going = true;
