@@ -24,7 +24,7 @@ function setup() {
     lineH = 40;
     eixo1dist = placaY + placaH + 200;
     separacaoEntreEixos = 200;
-}
+}code
 
 function eixos(x, y, l, h, p) {
     //eixo x

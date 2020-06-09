@@ -40,6 +40,7 @@ body {
 .header-container {
     font-family: sans-serif;
     text-align: center;
+    font-size: 30px;
 }
 
 .introduction-text {
