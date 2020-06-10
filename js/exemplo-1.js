@@ -1,30 +1,21 @@
-let lineX;
-let MIN_WIDTH = 30;
-let MAX_WIDTH = 370;
+function setup() {
+  background(220, 220, 220);
+  cnv = createCanvas(600, 1000);
+  createAnchorButton();
+  centerButton();
+  centerCanvas();
+}
 
 function centerCanvas() {
-    var x = (windowWidth - width) / 2;
-    var y = link.height*2;
-    cnv.position(x, y);
+  var x = (windowWidth - width) / 2;
+  var y = link.height * 2;
+  cnv.position(x, y);
 }
 
-function centerButton(){
-    var x = ((windowWidth + cnv.width - width) / 2) - link.width;
-    var y = 0;
-    link.position(x, y);
-}
-
-function setup() {
-    //400, 700
-    cnv = createCanvas(400, 700);
-    createAnchorButton();
-    centerButton();
-    centerCanvas();
-    lineX = mouseX;
-    xvelocity = 2;
-    MIN_WIDTH = 30;
-    MAX_WIDTH = 370;
-    
+function centerButton() {
+  var x = ((windowWidth + cnv.width - width) / 2) - link.width;
+  var y = 0;
+  link.position(x, y);
 }
 
 function createAnchorButton() {
@@ -51,47 +42,75 @@ function windowResized() {
 }
 
 function draw() {
-    background(230);
+  //Força distribuída constante
+  for (x = 150; x <= 450; x += 15) {
+    triangle(x, 200, x + 5, 195, x - 5, 195);
+    line(x, 195, x, 160);
+  }
+  // barra
+  fill(150, 150, 150);
+  rect(150, 200, 300, 30);
+  noFill(150, 150, 150);
+  // Apoio simples
+  triangle(150, 233, 140, 248, 160, 248);
+  fill(220, 220, 220);
+  circle(150, 233, 6);
+  noFill()
+  line(140, 250, 160, 250);
+  line(140, 252, 160, 252);
+  // Apoio fixo
+  triangle(450, 233, 440, 248, 460, 248);
+  fill(220, 220, 220);
+  circle(450, 233, 6);
+  noFill()
+  line(440, 248, 434, 255);
+  line(445, 248, 439, 255);
+  line(450, 248, 444, 255);
+  line(455, 248, 449, 255);
+  line(460, 248, 454, 255);
+  // Base dos Gráficos
+  line(150, 295, 450, 295); //N
+  line(150, 495, 450, 495); //V
+  line(150, 695, 450, 695); //M
+}
 
-    // engastamento 
-    line(MIN_WIDTH, 50, 20, 40);
-    line(MIN_WIDTH, 60, 20, 50);
-    line(MIN_WIDTH, 70, 20, 60);
-    line(MIN_WIDTH, 80, 20, 70);
-
-    // eixos
-    line(MIN_WIDTH, 100, 30, 250);
-    line(MIN_WIDTH, 300, 30, 450);
-    line(MIN_WIDTH, 500, 30, 650);
-
-    line(10, 220, 370, 220);
-    line(10, 420, 370, 420);
-    line(10, 620, 370, 620);
-
-    // grafico N
-
-    // grafico V
-    rect(MIN_WIDTH, 310, lineX - MIN_WIDTH, 110)
-
-
-    // grafico M
-    triangle(30, 510, 30, 620, lineX, 620);
-
-    // retangulo
-    fill(250);
-    rect(30, 50, 340, 30);
-
-    // Carregamento P
-    fill(0);
-    line(lineX, 10, lineX, 50);
-    triangle(lineX - 5, 45, lineX, 50, lineX + 5, 45);
-
-    if (mouseIsPressed) {
-        lineX = mouseX
+function mouseDragged() {
+  if (mouseIsPressed) {
+    // Mantem tudo sempre na barra
+    if (mouseX >= 450) {
+      mouseX = 450;
+    } else if (mouseX <= 150) {
+      mouseX = 150;
     }
-    if (lineX <= MIN_WIDTH) {
-        lineX = MIN_WIDTH
-    } else if (lineX >= MAX_WIDTH) {
-        lineX = MAX_WIDTH
+    // Força pontual
+    background(220, 220, 220);
+    fill(220, 0, 0);
+    triangle(mouseX, 200, mouseX + 5, 195, mouseX - 5, 195);
+    noFill();
+    line(mouseX, 195, mouseX, 125);
+    //Graf. de N é desnecessário
+    //Graf. de V
+    for (i = 150; i <= mouseX; i++) {
+      stroke(150, 150, 150);
+      rect(i, -(10 * (450 - i) * 0.05 / (2) + 10 * (450 - mouseX) * 5 / (300)) + 532.5, 0, (10 * (450 - i) * 0.05 / (2) + 10 * (450 - mouseX) * 5 / (300)) - 37.5);
+      stroke(0, 0, 0);
     }
+    for (i = mouseX; i <= 450; i++) {
+      stroke(150, 150, 150);
+      rect(i, -(10 * (450 - i) * 0.05 / (2) - 10 * (mouseX - 150) * 5 / (300)) + 532.5, 0, (10 * (450 - i) * 0.05 / (2) - 10 * (mouseX - 150) * 5 / (300)) - 37.5);
+      stroke(0, 0, 0);
+    }
+    line(mouseX, -(10 * (450 - mouseX) * 0.05 / (2) + 10 * (450 - mouseX) * 5 / (300)) + 532.5, mouseX, -(10 * (450 - mouseX) * 0.05 / (2) - 10 * (mouseX - 150) * 5 / (300)) + 532.5);
+    line(150, -(10 * 300 * 0.05 / (2) + 10 * (450 - mouseX) * 5 / (300)) + 532.5, 150, 495);
+    line(450, (10 * (mouseX - 150) * 5 / (300)) + 532.5, 450, 495);
+    //Graf. de M
+    stroke(150, 150, 150);
+    for (i = 150; i <= mouseX; i = i + 1) {
+      rect(i, (-(i - 150) * (i - 450) * 0.006 + (1500 * (i - 150) / (mouseX - 150) * 0.06 + 695)), 0, (i - 150) * (i - 450) * 0.006 - (1500 * (i - 150) / (mouseX - 150) * 0.06));
+    }
+    for (i = mouseX; i <= 450; i++) {
+      rect(i, (-(i - 150) * (i - 450) * 0.006 + (1500 * (i - 450) / (mouseX - 450) * 0.06 + 695)), 0, (i - 150) * (i - 450) * 0.006 - (1500 * (i - 450) / (mouseX - 450) * 0.06));
+    }
+    stroke(0, 0, 0);
+  }
 }
