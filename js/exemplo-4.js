@@ -1,10 +1,35 @@
 function centerCanvas() {
     var x = (windowWidth - width) / 2;
-    var y = (windowHeight - height) / 2 + (windowHeight * 0.05) + (canvasHeight * 0.2);
+    var y = link.height * 2;
     cnv.position(x, y);
 }
 
+function centerButton() {
+    var x = ((windowWidth + cnv.width - width) / 2) - link.width;
+    var y = 0;
+    link.position(x, y);
+}
+
+function createAnchorButton() {
+    link = createA("index.html", "Voltar");
+    link.style(`
+        display: inline - block;
+        padding: 0.35em 1.2em;
+        border: 0.1em solid #162447;
+        margin: 0 0.4em 0.3em 0;
+        border-radius: 0.12em;
+        box-sizing: border-box;
+        text-decoration: none;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        color: #162447;
+        text-align: center;
+    `);
+    return link;
+}
+
 function windowResized() {
+    centerButton();
     centerCanvas();
 }
 
@@ -13,6 +38,8 @@ function setup() {
     canvasWidth = 400;
     canvasHeight = 1000;
     cnv = createCanvas(canvasWidth, canvasHeight);
+    createAnchorButton();
+    centerButton();
     centerCanvas();
     xvelocity = 2;
     going = true;

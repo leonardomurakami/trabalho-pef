@@ -1,22 +1,52 @@
 let lineX;
+let MIN_WIDTH = 30;
+let MAX_WIDTH = 370;
 
 function centerCanvas() {
     var x = (windowWidth - width) / 2;
-    var y = (windowHeight - height) / 2 + (windowHeight*0.05);
+    var y = link.height*2;
     cnv.position(x, y);
+}
+
+function centerButton(){
+    var x = ((windowWidth + cnv.width - width) / 2) - link.width;
+    var y = 0;
+    link.position(x, y);
 }
 
 function setup() {
     //400, 700
     cnv = createCanvas(400, 700);
+    createAnchorButton();
+    centerButton();
     centerCanvas();
     lineX = mouseX;
     xvelocity = 2;
     MIN_WIDTH = 30;
     MAX_WIDTH = 370;
+    
+}
+
+function createAnchorButton() {
+    link = createA("index.html", "Voltar");
+    link.style(`
+        display: inline - block;
+        padding: 0.35em 1.2em;
+        border: 0.1em solid #162447;
+        margin: 0 0.4em 0.3em 0;
+        border-radius: 0.12em;
+        box-sizing: border-box;
+        text-decoration: none;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        color: #162447;
+        text-align: center;
+    `);
+    return link;
 }
 
 function windowResized() {
+    centerButton();
     centerCanvas();
 }
 
